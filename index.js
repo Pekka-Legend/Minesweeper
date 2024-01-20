@@ -301,14 +301,14 @@ gridButton.onclick = function(e)
 }
 document.onmousedown = function(e)
 {
-    if (e.pageX > 470) //dont register clicks unless they are inside the canvas
-    {
-        updateTiles(e.offsetX, e.offsetY, e.button)
-    }
     if (win == true)
     {
         win = false
         firstClick = true
         ResetGame()
+    }
+    else if (e.pageX > 470) //dont register clicks unless they are inside the canvas
+    {
+        updateTiles(e.offsetX, e.offsetY, e.button)
     }
 }
