@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Minesweeper</title>
+        <style>
+            body {
+                background-color:rgb(142, 142, 142)
+            }
+            label{
+                font-size: 30px;
+            }
+            .text{
+                width: 100px;
+                height: 40px;
+                font-size: 20px;
+                text-align:center
+            }
+            button{
+                
+                width: 200px;
+                height: 40px;
+                font-size: 25px;
+            }
+        </style>
+    </head>
+    <body oncontextmenu="return false">
+        <label>Grid Size: </label>
+        <input type="text" class="text" id="text" value="16">
+        <br><button id="GridChange">Set</button>
+        <center><canvas></canvas></center>
+        <script src="index.js"></script>
+    </body>
+</html>
