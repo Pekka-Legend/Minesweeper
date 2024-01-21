@@ -75,6 +75,10 @@ class Tile
     }
     update(mousex, mousey, button)
     {
+        if (this.isBomb)
+        {
+            this.number = 10
+        }
         //check if the mouse is clicking this tile
         if (mousex >= this.x * TILE_SIZE && mousex <= this.x * TILE_SIZE + TILE_SIZE && mousey >= this.y * TILE_SIZE && mousey <= this.y * TILE_SIZE + TILE_SIZE)
         {
