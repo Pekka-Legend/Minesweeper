@@ -12,6 +12,7 @@ var firstClick = true
 var tiles = []
 var bombs = 0
 var win = false
+var lose = false
 class Tile
 {
     constructor(x, y, isBomb, color)
@@ -20,7 +21,7 @@ class Tile
         this.y = y
         this.isBomb = isBomb
         this.color = color
-        this.number
+        this.number = 10
         this.active = false
         this.flagged = false
     }
@@ -86,7 +87,7 @@ class Tile
                 }
                 else if (this.isBomb)
                 {
-                    ResetGame()
+                    lose = true
                     firstClick = true
                 }
                 else
@@ -283,6 +284,13 @@ function updateTiles(x, y, button)
         c.fillText("You Win!", canvas.width / 2 - w / 2, 200)
         win = true
     }
+    if (lose)
+    {
+        c.fillStyle = 'red'
+        c.font = "80px Arial"
+        var w = c.measureText("You Lose").width
+        c.fillText("You Lose", canvas.width / 2 - w / 2, 200)
+    }
     
 }
 
@@ -301,9 +309,10 @@ gridButton.onclick = function(e)
 }
 document.onmousedown = function(e)
 {
-    if (win == true)
+    if (win == true || lose == true)
     {
         win = false
+        lose = false
         firstClick = true
         ResetGame()
     }
