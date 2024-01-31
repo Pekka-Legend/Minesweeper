@@ -13,6 +13,9 @@ var tiles = []
 var bombs = 0
 var win = false
 var lose = false
+var time
+var endTime
+var firstFrameOfWin = true
 class Tile
 {
     constructor(x, y, isBomb, color)
@@ -258,7 +261,10 @@ function updateTiles(x, y, button)
     var activeTiles = 0
     requestAnimationFrame(updateTiles)
     c.clearRect(0, 0,  canvas.width, canvas.height)
-
+    if (firstClick)
+    {
+        time = Date.now()
+    }
     
     for (var i = 0; i < GRID_SIZE; i++)
     {
@@ -276,7 +282,15 @@ function updateTiles(x, y, button)
     {
         ZeroSpreading() //automatically fills in all bordering 0s
     }
-    if (activeTiles == bombs)
+
+    if (lose)
+    {
+        c.fillStyle = 'red'
+        c.font = "80px Arial"
+        var w = c.measureText("You Lose").width
+        c.fillText("You Lose", canvas.width / 2 - w / 2, 200)
+    }
+    else if (activeTiles == bombs)
     {
         c.clearRect(0, 0, canvas.width, canvas.height)
         c.fillStyle = 'darkgreen'
@@ -286,14 +300,18 @@ function updateTiles(x, y, button)
         c.font = "80px Arial"
         var w = c.measureText("You Win!").width
         c.fillText("You Win!", canvas.width / 2 - w / 2, 200)
+
+        if (firstFrameOfWin)
+        {
+            endTime = (Date.now() - time) / 1000
+            firstFrameOfWin = false
+        }
+        c.fillStyle = 'black'
+        c.font = "60px Arial"
+        var w = c.measureText(endTime.toString()).width
+        c.fillText(endTime.toString(), canvas.width / 2 - w / 2, 400)
         win = true
-    }
-    if (lose)
-    {
-        c.fillStyle = 'red'
-        c.font = "80px Arial"
-        var w = c.measureText("You Lose").width
-        c.fillText("You Lose", canvas.width / 2 - w / 2, 200)
+        
     }
     
 }
@@ -304,6 +322,7 @@ function ResetGame(x = 0, y = 0, button = -1)
     TILE_SIZE = canvas.width / GRID_SIZE
     createLevel()
     updateTiles(x, y, button) //-1 for the button so it doesn't register the click at 0, 0 (same as earlier)
+    firstFrameOfWin = true
 }
 ResetGame()
 gridButton.onclick = function(e)
